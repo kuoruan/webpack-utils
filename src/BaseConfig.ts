@@ -2,6 +2,7 @@ import path from "path";
 
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import StylelintPlugin from "stylelint-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
 import webpack from "webpack";
 
 import AppConfig from "./AppConfig";
@@ -262,6 +263,16 @@ export default abstract class BaseConfig {
       },
       optimization: {
         minimize: true,
+        minimizer: [
+          new TerserPlugin({
+            terserOptions: {
+              format: {
+                comments: this.server ? false : "some",
+              },
+            },
+            extractComments: false,
+          }),
+        ],
       },
     };
   }
