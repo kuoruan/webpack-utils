@@ -9,30 +9,40 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import webpack from "webpack";
 import { merge } from "webpack-merge";
 
-import BaseConfig from "./BaseConfig";
+import BaseConfig, { EntryObject, TargetObject } from "./BaseConfig";
 
 export default class ClientConfig extends BaseConfig {
-  private target = "web";
-
-  constructor(protected rootPath: string, private entry: string) {
-    super(rootPath, false);
+  constructor(rootPath: string, entry: EntryObject) {
+    super(rootPath, entry, false);
   }
 
-  public setTarget(target: string): BaseConfig {
-    this.target = target;
+  public setAlias(alias: string, path: string): ClientConfig {
+    super.setAlias(alias, path);
+    return this;
+  }
+
+  public setDevHMREnabled(enabled: boolean): ClientConfig {
+    super.setDevHMREnabled(enabled);
+    return this;
+  }
+
+  public setTarget(target: TargetObject): ClientConfig {
+    super.setTarget(target);
     return this;
   }
 
   protected getCommonConfig(): webpack.Configuration {
     const baseCommon = super.getCommonConfig();
 
+    const rootPath = this.getRootPath();
+
     const appConfig = this.getAppConfig();
 
     return merge(baseCommon, {
       name: "client",
-      target: this.target,
+      target: this.getTarget(),
       output: {
-        path: path.resolve(this.rootPath, appConfig.getDistDir(), "client"),
+        path: path.resolve(rootPath, appConfig.getDistDir(), "client"),
         publicPath: appConfig.getPublicPath(),
       },
       module: {
@@ -71,7 +81,7 @@ export default class ClientConfig extends BaseConfig {
           patterns: [
             {
               from: "**/*",
-              context: path.resolve(this.rootPath, "public"),
+              context: path.resolve(rootPath, "public"),
               noErrorOnMissing: true,
             },
           ],
@@ -90,7 +100,7 @@ export default class ClientConfig extends BaseConfig {
     return merge(commonConfig, baseDevConfig, {
       entry: [
         (this.isDevHMREnabled() && "webpack-hot-middleware/client") || "",
-        path.resolve(this.rootPath, this.entry),
+        ...this.getEntry(),
       ].filter(Boolean),
       output: {
         filename: path.join(appConfig.getAssetsDir(), "js", "[name].js"),
@@ -119,10 +129,12 @@ export default class ClientConfig extends BaseConfig {
 
     const baseProdConfig = super.getProdConfig();
 
+    const rootPath = this.getRootPath();
+
     const appConfig = this.getAppConfig();
 
     return merge(commonConfig, baseProdConfig, {
-      entry: path.resolve(this.rootPath, this.entry),
+      entry: this.getEntry(),
       output: {
         filename: path.join(
           appConfig.getAssetsDir(),
@@ -173,7 +185,7 @@ export default class ClientConfig extends BaseConfig {
           threshold: 8192,
         }),
         new AssetsPlugin({
-          path: path.resolve(this.rootPath, appConfig.getDistDir()),
+          path: path.resolve(rootPath, appConfig.getDistDir()),
           filename: "assets.json",
           useCompilerPath: false,
           fullPath: true,

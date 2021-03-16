@@ -22,7 +22,7 @@ export default class EnvHolder {
   constructor(private rootPath: string, private appConfig: AppConfig) {
     const mode = process.env.MODE || process.env.NODE_ENV;
 
-    const dotEnvFile = path.join(this.rootPath, ".env");
+    const dotEnvFile = path.resolve(this.rootPath, ".env");
 
     const dotEnvFiles = [
       `${dotEnvFile}.${mode}.local`,

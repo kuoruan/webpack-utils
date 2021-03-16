@@ -6,21 +6,34 @@ import webpack from "webpack";
 
 import AppConfig from "./AppConfig";
 import EnvHolder from "./EnvHolder";
+import NoopPlugin from "./NoopPlugin";
+
+export type EntryObject =
+  | string
+  | string[]
+  | ((isDevelopment: boolean) => string | string[]);
+
+export type TargetObject = string | ((isDevelopment: boolean) => string);
 
 export default abstract class BaseConfig {
+  private entry: string[] = [];
+
   private aliasMap: Map<string, string>;
 
   private appConfig: AppConfig;
 
   private envHolder: EnvHolder;
 
-  private isDev: boolean;
+  private dev: boolean;
 
   private devHMREnabled = true;
 
+  private target: string;
+
   protected constructor(
-    protected rootPath: string,
-    protected isServer: boolean = false
+    private rootPath: string,
+    entry: EntryObject,
+    private server: boolean = false
   ) {
     if (!process.env.NODE_ENV) {
       throw new Error(
@@ -28,7 +41,13 @@ export default abstract class BaseConfig {
       );
     }
 
-    this.isDev = process.env.NODE_ENV !== "production";
+    const dev = process.env.NODE_ENV !== "production";
+
+    const e = typeof entry === "function" ? entry(dev) : entry;
+
+    this.entry = Array.isArray(e) ? e.slice() : Array.from<string>([e]);
+
+    this.dev = dev;
 
     this.aliasMap = new Map([
       ["@", path.resolve(rootPath, "./src")],
@@ -38,36 +57,52 @@ export default abstract class BaseConfig {
     this.appConfig = new AppConfig(rootPath);
 
     this.envHolder = new EnvHolder(rootPath, this.appConfig);
+
+    this.target = server ? "node" : "web";
   }
 
-  public setAlias(
-    alias: string,
-    path: string | ((rootPath: string) => string)
-  ): BaseConfig {
-    if (!alias || !path) {
+  protected setAlias(alias: string, target: string): void {
+    if (!alias || !target) {
       throw new TypeError("invalid arguments");
     }
 
-    let targetPath: string;
-    if (typeof path === "function") {
-      targetPath = String(path(this.rootPath));
-    } else {
-      targetPath = String(path);
-    }
-
-    this.aliasMap.set(alias, targetPath);
-    return this;
+    this.aliasMap.set(
+      alias,
+      target.startsWith("/")
+        ? path.resolve(target)
+        : path.resolve(this.rootPath, target)
+    );
   }
 
-  public setDevHMREnabled(enabled: boolean): BaseConfig {
+  protected setDevHMREnabled(enabled: boolean): void {
     this.devHMREnabled = enabled;
-    return this;
   }
 
-  public abstract setTarget(target: string): BaseConfig;
+  protected setTarget(target: TargetObject): void {
+    this.target =
+      typeof target === "function" ? target(this.dev) : String(target);
+  }
+
+  protected isServer(): boolean {
+    return this.server;
+  }
 
   protected isDevelopment(): boolean {
-    return this.isDev;
+    return this.dev;
+  }
+
+  protected getTarget(): string {
+    return this.target;
+  }
+
+  protected getRootPath(): string {
+    return this.rootPath;
+  }
+
+  protected getEntry(): string[] {
+    return this.entry.map((e) =>
+      e.startsWith("/") ? path.resolve(e) : path.resolve(this.rootPath, e)
+    );
   }
 
   protected getAppConfig(): AppConfig {
@@ -117,11 +152,11 @@ export default abstract class BaseConfig {
               loader: "url-loader",
               options: {
                 limit: 8192,
-                emitFile: !this.isServer,
+                emitFile: !this.server,
                 name: path.join(
                   assetsDir,
                   "img",
-                  this.isDev ? "[name].[ext]" : "[name].[contenthash:7].[ext]"
+                  this.dev ? "[name].[ext]" : "[name].[contenthash:7].[ext]"
                 ),
               },
             },
@@ -131,9 +166,9 @@ export default abstract class BaseConfig {
             use: {
               loader: "file-loader",
               options: {
-                emitFile: !this.isServer,
+                emitFile: !this.server,
                 outputPath: path.join(assetsDir, "media"),
-                name: this.isDev
+                name: this.dev
                   ? "[name].[ext]"
                   : "[name].[contenthash:7].[ext]",
               },
@@ -148,9 +183,9 @@ export default abstract class BaseConfig {
                 loader: "url-loader",
                 options: {
                   limit: 8192,
-                  emitFile: !this.isServer,
+                  emitFile: !this.server,
                   outputPath: path.join(assetsDir, "img"),
-                  name: this.isDev
+                  name: this.dev
                     ? "[name].[ext]"
                     : "[name].[contenthash:7].[ext]",
                 },
@@ -163,9 +198,9 @@ export default abstract class BaseConfig {
               {
                 loader: "file-loader",
                 options: {
-                  emitFile: !this.isServer,
+                  emitFile: !this.server,
                   outputPath: path.join(assetsDir, "fonts"),
-                  name: this.isDev
+                  name: this.dev
                     ? "[name].[ext]"
                     : "[name].[contenthash:7].[ext]",
                 },
@@ -178,15 +213,17 @@ export default abstract class BaseConfig {
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
           ...stringifiedEnv,
-          __isClient__: JSON.stringify(!this.isServer),
-          __isServer__: JSON.stringify(this.isServer),
+          __isClient__: JSON.stringify(!this.server),
+          __isServer__: JSON.stringify(this.server),
         }),
       ],
       stats: {
         all: false,
         assets: true,
-        assetsSort: "!size",
+        assetsSort: "size",
+        entrypoints: true,
         errors: true,
+        timings: true,
       },
     };
   }
@@ -206,8 +243,9 @@ export default abstract class BaseConfig {
         ],
       },
       plugins: [
+        (this.devHMREnabled && new webpack.HotModuleReplacementPlugin()) ||
+          new NoopPlugin(),
         new StylelintPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
       ],
     };
   }

@@ -5,7 +5,7 @@ import webpack from "webpack";
 import { merge } from "webpack-merge";
 import NodeExternals from "webpack-node-externals";
 
-import BaseConfig from "./BaseConfig";
+import BaseConfig, { EntryObject, TargetObject } from "./BaseConfig";
 import NoopPlugin from "./NoopPlugin";
 
 export default class ServerConfig extends BaseConfig {
@@ -13,10 +13,8 @@ export default class ServerConfig extends BaseConfig {
 
   private runScriptArgs: string[] = [];
 
-  private target = "node";
-
-  constructor(protected rootPath: string, private entry: string) {
-    super(rootPath, true);
+  constructor(rootPath: string, entry: EntryObject) {
+    super(rootPath, entry, true);
   }
 
   public setDevRunScript(run: boolean): ServerConfig {
@@ -29,20 +27,32 @@ export default class ServerConfig extends BaseConfig {
     return this;
   }
 
-  public setTarget(target: string): ServerConfig {
-    this.target = target;
+  public setAlias(alias: string, path: string): ServerConfig {
+    super.setAlias(alias, path);
+    return this;
+  }
+
+  public setDevHMREnabled(enabled: boolean): ServerConfig {
+    super.setDevHMREnabled(enabled);
+    return this;
+  }
+
+  public setTarget(target: TargetObject): ServerConfig {
+    super.setTarget(target);
     return this;
   }
 
   protected getCommonConfig(): webpack.Configuration {
     const baseCommon = super.getCommonConfig();
 
+    const rootPath = this.getRootPath();
+
     const appConfig = this.getAppConfig();
 
     return merge(baseCommon, {
       name: "server",
       output: {
-        path: path.resolve(this.rootPath, appConfig.getDistDir(), "server"),
+        path: path.resolve(rootPath, appConfig.getDistDir(), "server"),
         publicPath: appConfig.getPublicPath(),
       },
       module: {
@@ -69,11 +79,11 @@ export default class ServerConfig extends BaseConfig {
     const appConfig = this.getAppConfig();
 
     return merge(commonConfig, baseDevConfig, {
-      target: this.target,
+      target: this.getTarget(),
       watch: this.isDevHMREnabled(),
       entry: [
         (this.isDevHMREnabled() && "webpack/hot/signal") || "",
-        path.resolve(this.rootPath, this.entry),
+        ...this.getEntry(),
       ].filter(Boolean),
       output: {
         filename: "[name].js",
@@ -114,8 +124,8 @@ export default class ServerConfig extends BaseConfig {
     const appConfig = this.getAppConfig();
 
     return merge(commonConfig, baseProdConfig, {
-      target: this.target,
-      entry: path.resolve(this.rootPath, this.entry),
+      target: this.getTarget(),
+      entry: this.getEntry(),
       output: {
         filename: "[name].js",
         library: "[name]",
