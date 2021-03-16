@@ -1,0 +1,33 @@
+name: Node.js Package CI
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '10', '12', '14' ]
+    name: Node ${{ matrix.node }} Build Test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Packages
+        run: yarn install
+
+      - name: Build Test
+        run: yarn build
