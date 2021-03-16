@@ -229,6 +229,7 @@ export default abstract class BaseConfig {
         entrypoints: true,
         errors: true,
         timings: true,
+        warnings: true,
       },
     };
   }
@@ -240,8 +241,19 @@ export default abstract class BaseConfig {
       plugins: [
         (this.devHMREnabled && new webpack.HotModuleReplacementPlugin()) ||
           new NoopPlugin(),
-        new ESLintPlugin(),
-        new StylelintPlugin(),
+        new ESLintPlugin({
+          extensions: ["js", "jsx", "ts", "tsx"],
+          emitError: true,
+          emitWarning: true,
+          failOnError: false,
+          failOnWarning: false,
+        }),
+        new StylelintPlugin({
+          emitError: true,
+          emitWarning: true,
+          failOnError: false,
+          failOnWarning: false,
+        }),
       ],
     };
   }
