@@ -14,6 +14,17 @@
     "dist",
     "LICENSE"
   ],
+  "homepage": "https://github.com/kuoruan/webpack-utils",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuoruan/webpack-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kuoruan/webpack-utils/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "webpack": "^5.0.0"
   },
