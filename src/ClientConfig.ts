@@ -16,8 +16,13 @@ export default class ClientConfig extends BaseConfig {
     super(rootPath, entry, false);
   }
 
-  public setAlias(alias: string, path: string): ClientConfig {
-    super.setAlias(alias, path);
+  public setAlias(name: string, path: string): ClientConfig {
+    super.setAlias(name, path);
+    return this;
+  }
+
+  public setAliases(aliases: Record<string, string>): ClientConfig {
+    super.setAliases(aliases);
     return this;
   }
 

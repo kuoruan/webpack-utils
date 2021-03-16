@@ -18,7 +18,7 @@ export type TargetObject = string | ((isDevelopment: boolean) => string);
 export default abstract class BaseConfig {
   private entry: string[] = [];
 
-  private aliasMap: Map<string, string>;
+  private alias: Record<string, string> = {};
 
   private appConfig: AppConfig;
 
@@ -49,11 +49,6 @@ export default abstract class BaseConfig {
 
     this.dev = dev;
 
-    this.aliasMap = new Map([
-      ["@", path.resolve(rootPath, "./src")],
-      ["~", path.resolve(rootPath)],
-    ]);
-
     this.appConfig = new AppConfig(rootPath);
 
     this.envHolder = new EnvHolder(rootPath, this.appConfig);
@@ -61,17 +56,25 @@ export default abstract class BaseConfig {
     this.target = server ? "node" : "web";
   }
 
-  protected setAlias(alias: string, target: string): void {
-    if (!alias || !target) {
+  protected setAlias(name: string, target: string): void {
+    if (!name || !target) {
       throw new TypeError("invalid arguments");
     }
 
-    this.aliasMap.set(
-      alias,
-      target.startsWith("/")
-        ? path.resolve(target)
-        : path.resolve(this.rootPath, target)
-    );
+    this.alias[name] = target.startsWith("/")
+      ? path.resolve(target)
+      : path.resolve(this.rootPath, target);
+  }
+
+  protected setAliases(aliases: Record<string, string>): void {
+    this.alias = {};
+
+    for (const name in aliases) {
+      let target: string;
+      if (name && (target = aliases[name])) {
+        this.setAlias(name, target);
+      }
+    }
   }
 
   protected setDevHMREnabled(enabled: boolean): void {
@@ -124,7 +127,7 @@ export default abstract class BaseConfig {
 
     return {
       resolve: {
-        alias: Object.fromEntries<string>(this.aliasMap),
+        alias: this.alias,
         roots: [this.rootPath],
         extensions: [".js", ".jsx", ".ts", ".tsx"],
       },

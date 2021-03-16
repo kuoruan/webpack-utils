@@ -27,8 +27,13 @@ export default class ServerConfig extends BaseConfig {
     return this;
   }
 
-  public setAlias(alias: string, path: string): ServerConfig {
-    super.setAlias(alias, path);
+  public setAlias(name: string, path: string): ServerConfig {
+    super.setAlias(name, path);
+    return this;
+  }
+
+  public setAliases(aliases: Record<string, string>): ServerConfig {
+    super.setAliases(aliases);
     return this;
   }
 
