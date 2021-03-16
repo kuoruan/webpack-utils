@@ -9,21 +9,28 @@ import BaseConfig, { EntryObject, TargetObject } from "./BaseConfig";
 import NoopPlugin from "./NoopPlugin";
 
 export default class ServerConfig extends BaseConfig {
-  private devRunScript = true;
+  private devRunScriptEnabled = true;
 
   private runScriptArgs: string[] = [];
+
+  private runScriptNodeArgs: string[] = [];
 
   constructor(rootPath: string, entry: EntryObject) {
     super(rootPath, entry, true);
   }
 
-  public setDevRunScript(run: boolean): ServerConfig {
-    this.devRunScript = run;
+  public setDevRunScriptEnabled(enabled: boolean): ServerConfig {
+    this.devRunScriptEnabled = enabled;
     return this;
   }
 
-  public setRunScriptArgs(args: string[]): ServerConfig {
+  public setRunScriptArgs(...args: string[]): ServerConfig {
     this.runScriptArgs = args.slice();
+    return this;
+  }
+
+  public setRunScriptNodeArgs(...args: string[]): ServerConfig {
+    this.runScriptNodeArgs = args.slice();
     return this;
   }
 
@@ -109,9 +116,10 @@ export default class ServerConfig extends BaseConfig {
         new webpack.WatchIgnorePlugin({
           paths: [/\.d\.ts$/],
         }),
-        (this.devRunScript &&
+        (this.devRunScriptEnabled &&
           new RunScriptWebpackPlugin({
             name: "main.js",
+            nodeArgs: this.runScriptNodeArgs,
             args: this.runScriptArgs,
             signal: true,
             restartable: true,
