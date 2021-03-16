@@ -1,6 +1,7 @@
 import path from "path";
 
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import ESLintPlugin from "eslint-webpack-plugin";
 import StylelintPlugin from "stylelint-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import webpack from "webpack";
@@ -236,19 +237,10 @@ export default abstract class BaseConfig {
     return {
       mode: "development",
       devtool: "eval-cheap-module-source-map",
-      module: {
-        rules: [
-          {
-            test: /.[jt]sx?$/,
-            exclude: /node_modules/,
-            enforce: "pre",
-            use: "eslint-loader",
-          },
-        ],
-      },
       plugins: [
         (this.devHMREnabled && new webpack.HotModuleReplacementPlugin()) ||
           new NoopPlugin(),
+        new ESLintPlugin(),
         new StylelintPlugin(),
       ],
     };
