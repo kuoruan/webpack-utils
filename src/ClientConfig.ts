@@ -10,6 +10,7 @@ import webpack from "webpack";
 import { merge } from "webpack-merge";
 
 import BaseConfig, { EntryObject, TargetObject } from "./BaseConfig";
+import NoopPlugin from "./NoopPlugin";
 import { CSSLoaderType, CSSConfigHolder } from "./types";
 
 export default class ClientConfig extends BaseConfig {
@@ -149,11 +150,13 @@ export default class ClientConfig extends BaseConfig {
         level: "none",
       },
       plugins: [
-        new ReactRefreshWebpackPlugin({
-          overlay: {
-            sockIntegration: "whm",
-          },
-        }),
+        (this.isDevHMREnabled() &&
+          new ReactRefreshWebpackPlugin({
+            overlay: {
+              sockIntegration: "whm",
+            },
+          })) ||
+          new NoopPlugin(),
         new ForkTsCheckerWebpackPlugin(),
       ],
     });
