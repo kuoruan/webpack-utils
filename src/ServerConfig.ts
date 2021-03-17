@@ -64,13 +64,13 @@ export default class ServerConfig extends BaseConfig {
     return merge(baseCommon, {
       name: "server",
       output: {
-        path: path.resolve(rootPath, appConfig.getDistDir(), "server"),
+        path: path.resolve(rootPath, appConfig.getOutputDir(), "server"),
         publicPath: appConfig.getPublicPath(),
       },
       module: {
         rules: [
           {
-            test: /\.s?[ac]ss$/,
+            test: /\.(s[ac]ss|less|styl|css)$/,
             use: "null-loader", // ignore css files
           },
         ],

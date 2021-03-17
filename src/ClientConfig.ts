@@ -10,6 +10,7 @@ import webpack from "webpack";
 import { merge } from "webpack-merge";
 
 import BaseConfig, { EntryObject, TargetObject } from "./BaseConfig";
+import { CSSLoaderType, CSSConfigHolder } from "./types";
 
 export default class ClientConfig extends BaseConfig {
   constructor(rootPath: string, entry: EntryObject) {
@@ -36,6 +37,39 @@ export default class ClientConfig extends BaseConfig {
     return this;
   }
 
+  private getCSSLoaders(
+    config: CSSConfigHolder,
+    loaderType: CSSLoaderType,
+    isDev: boolean
+  ): webpack.RuleSetUseItem[] {
+    const loaders: webpack.RuleSetUseItem[] = [
+      // add style-loader or extract loader
+      isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+      {
+        loader: "css-loader",
+        options: config.getLoaderOption("css"),
+      },
+      {
+        loader: "postcss-loader",
+        options: config.getLoaderOption("postcss"),
+      },
+    ];
+
+    switch (loaderType) {
+      case "sass":
+      case "less":
+      case "stylus": {
+        loaders.push({
+          loader: `${loaderType}-loader`,
+          options: config.getLoaderOption(loaderType),
+        });
+        break;
+      }
+    }
+
+    return loaders;
+  }
+
   protected getCommonConfig(): webpack.Configuration {
     const baseCommon = super.getCommonConfig();
 
@@ -43,41 +77,37 @@ export default class ClientConfig extends BaseConfig {
 
     const appConfig = this.getAppConfig();
 
+    const cssConfig = appConfig.getCSSConfig();
+
+    const isDev = this.isDevelopment();
+
     return merge(baseCommon, {
       name: "client",
       target: this.getTarget(),
       output: {
-        path: path.resolve(rootPath, appConfig.getDistDir(), "client"),
+        path: path.resolve(rootPath, appConfig.getOutputDir(), "client"),
         publicPath: appConfig.getPublicPath(),
       },
       module: {
         rules: [
           {
             test: /\.css$/,
-            use: [
-              this.isDevelopment()
-                ? "style-loader"
-                : MiniCssExtractPlugin.loader,
-              "css-loader",
-              "postcss-loader",
-            ],
+            use: this.getCSSLoaders(cssConfig, "css", isDev),
           },
           {
             test: /\.s[ac]ss$/,
             exclude: /node_modules/,
-            use: [
-              this.isDevelopment()
-                ? "style-loader"
-                : MiniCssExtractPlugin.loader,
-              "css-loader",
-              "postcss-loader",
-              {
-                loader: "sass-loader",
-                options: {
-                  additionalData: appConfig.getSassAdditionalData(),
-                },
-              },
-            ],
+            use: this.getCSSLoaders(cssConfig, "sass", isDev),
+          },
+          {
+            test: /\.less$/,
+            exclude: /node_modules/,
+            use: this.getCSSLoaders(cssConfig, "less", isDev),
+          },
+          {
+            test: /\.styl$/,
+            exclude: /node_modules/,
+            use: this.getCSSLoaders(cssConfig, "stylus", isDev),
           },
         ],
       },
@@ -190,7 +220,7 @@ export default class ClientConfig extends BaseConfig {
           threshold: 8192,
         }),
         new AssetsPlugin({
-          path: path.resolve(rootPath, appConfig.getDistDir()),
+          path: path.resolve(rootPath, appConfig.getOutputDir()),
           filename: "assets.json",
           useCompilerPath: false,
           fullPath: true,

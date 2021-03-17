@@ -6,9 +6,10 @@ import StylelintPlugin from "stylelint-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import webpack from "webpack";
 
-import AppConfig from "./AppConfig";
-import EnvHolder from "./EnvHolder";
+import AppConfigParser from "./AppConfigParser";
+import EnvParser from "./EnvParser";
 import NoopPlugin from "./NoopPlugin";
+import { AppConfigHolder, EnvHolder } from "./types";
 
 export type EntryObject =
   | string
@@ -22,7 +23,7 @@ export default abstract class BaseConfig {
 
   private alias: Record<string, string> = {};
 
-  private appConfig: AppConfig;
+  private appConfig: AppConfigHolder;
 
   private envHolder: EnvHolder;
 
@@ -51,9 +52,9 @@ export default abstract class BaseConfig {
 
     this.dev = dev;
 
-    this.appConfig = new AppConfig(rootPath);
+    this.appConfig = new AppConfigParser(rootPath);
 
-    this.envHolder = new EnvHolder(rootPath, this.appConfig);
+    this.envHolder = new EnvParser(rootPath, this.appConfig);
 
     this.target = server ? "node" : "web";
   }
@@ -110,7 +111,7 @@ export default abstract class BaseConfig {
     );
   }
 
-  protected getAppConfig(): AppConfig {
+  protected getAppConfig(): AppConfigHolder {
     return this.appConfig;
   }
 
@@ -243,12 +244,14 @@ export default abstract class BaseConfig {
           new NoopPlugin(),
         new ESLintPlugin({
           extensions: ["js", "jsx", "ts", "tsx"],
+          exclude: "node_modules",
           emitError: true,
           emitWarning: true,
           failOnError: false,
           failOnWarning: false,
         }),
         new StylelintPlugin({
+          files: "**/*.(s[ca]ss|less|styl|css)",
           emitError: true,
           emitWarning: true,
           failOnError: false,

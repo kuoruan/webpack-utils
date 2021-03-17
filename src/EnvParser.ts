@@ -3,23 +3,14 @@ import path from "path";
 
 import dotenv from "dotenv";
 
-import AppConfig from "./AppConfig";
+import { AppConfigHolder, EnvHolder, RawEnv, StringifiedEnv } from "./types";
 
-export type RawEnv = {
-  NODE_ENV: string;
-  BUILD_TIME: string;
-  PUBLIC_URL: string;
-  [key: string]: string | undefined;
-};
-
-export type StringifiedEnv = Record<string, Record<keyof RawEnv, string>>;
-
-export default class EnvHolder {
+export default class EnvParser implements EnvHolder {
   private raw: RawEnv;
 
   private stringified: StringifiedEnv;
 
-  constructor(private rootPath: string, private appConfig: AppConfig) {
+  constructor(private rootPath: string, private appConfig: AppConfigHolder) {
     const mode = process.env.MODE || process.env.NODE_ENV;
 
     const dotEnvFile = path.resolve(this.rootPath, ".env");
