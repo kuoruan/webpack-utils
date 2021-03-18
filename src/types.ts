@@ -37,7 +37,7 @@ export type RawEnv = {
 
   BUILD_TIME: string;
 
-  PUBLIC_URL: string;
+  PUBLIC_PATH: string;
 
   [key: string]: string | undefined;
 };

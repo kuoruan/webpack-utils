@@ -40,7 +40,7 @@ export default class EnvParser implements EnvHolder {
         {
           NODE_ENV: process.env.NODE_ENV || "production",
           BUILD_TIME: new Date().toLocaleString(),
-          PUBLIC_URL: this.appConfig.getPublicPath().replace(/\/$/, ""),
+          PUBLIC_PATH: this.appConfig.getPublicPath().replace(/\/$/, ""),
         }
       );
 
