@@ -24,15 +24,21 @@ export type CSSConfigHolder = {
 
 export type AppConfigHolder = {
   getOutputDir(): string;
+
   getAssetsDir(): string;
+
   getPublicPath(): string;
+
   getCSSConfig(): CSSConfigHolder;
 };
 
 export type RawEnv = {
   NODE_ENV: string;
+
   BUILD_TIME: string;
+
   PUBLIC_URL: string;
+
   [key: string]: string | undefined;
 };
 
@@ -40,5 +46,6 @@ export type StringifiedEnv = Record<string, Record<keyof RawEnv, string>>;
 
 export type EnvHolder = {
   getRaw(): RawEnv;
+
   getStringified(): StringifiedEnv;
 };
