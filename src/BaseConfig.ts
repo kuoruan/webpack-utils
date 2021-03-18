@@ -29,6 +29,8 @@ export default abstract class BaseConfig {
 
   private dev: boolean;
 
+  private prodMiniEnabled = true;
+
   private devHMREnabled = true;
 
   private target: string;
@@ -82,6 +84,10 @@ export default abstract class BaseConfig {
 
   protected setDevHMREnabled(enabled: boolean): void {
     this.devHMREnabled = enabled;
+  }
+
+  protected setProdMiniEnabled(enabled: boolean): void {
+    this.prodMiniEnabled = enabled;
   }
 
   protected setTarget(target: TargetObject): void {
@@ -269,7 +275,7 @@ export default abstract class BaseConfig {
         hints: false,
       },
       optimization: {
-        minimize: true,
+        minimize: this.prodMiniEnabled,
         minimizer: [
           new TerserPlugin({
             terserOptions: {

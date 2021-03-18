@@ -49,6 +49,11 @@ export default class ServerConfig extends BaseConfig {
     return this;
   }
 
+  public setProdMiniEnabled(enabled: boolean): ServerConfig {
+    super.setProdMiniEnabled(enabled);
+    return this;
+  }
+
   public setTarget(target: TargetObject): ServerConfig {
     super.setTarget(target);
     return this;

@@ -33,6 +33,11 @@ export default class ClientConfig extends BaseConfig {
     return this;
   }
 
+  public setProdMiniEnabled(enabled: boolean): ClientConfig {
+    super.setProdMiniEnabled(enabled);
+    return this;
+  }
+
   public setTarget(target: TargetObject): ClientConfig {
     super.setTarget(target);
     return this;
