@@ -26,6 +26,10 @@
     "access": "public"
   },
   "peerDependencies": {
+    "eslint": "*",
+    "react-refresh": "*",
+    "stylelint": "*",
+    "typescript": "*",
     "webpack": "^5.0.0"
   },
   "dependencies": {
