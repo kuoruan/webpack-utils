@@ -55,7 +55,7 @@
     "@types/mini-css-extract-plugin": "^1.4.0",
     "@types/terser-webpack-plugin": "^5.0.3",
     "@types/webpack-node-externals": "^2.5.1",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.0.0",
