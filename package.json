@@ -40,7 +40,7 @@
     "copy-webpack-plugin": "^8.1.1",
     "dotenv": "^9.0.0",
     "eslint-webpack-plugin": "^2.5.4",
-    "fork-ts-checker-webpack-plugin": "^6.2.6",
+    "fork-ts-checker-webpack-plugin": "^6.2.10",
     "mini-css-extract-plugin": "^1.6.0",
     "run-script-webpack-plugin": "^0.0.11",
     "stylelint-webpack-plugin": "^2.1.1",
