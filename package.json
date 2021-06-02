@@ -38,7 +38,7 @@
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "compression-webpack-plugin": "^8.0.0",
     "copy-webpack-plugin": "^9.0.0",
-    "dotenv": "^9.0.0",
+    "dotenv": "^10.0.0",
     "eslint-webpack-plugin": "^2.5.4",
     "fork-ts-checker-webpack-plugin": "^6.2.10",
     "mini-css-extract-plugin": "^1.6.0",
