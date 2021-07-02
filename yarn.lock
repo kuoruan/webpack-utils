@@ -81,10 +81,10 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@pmmmwh/react-refresh-webpack-plugin@^0.5.0-beta.9":
-  version "0.5.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.0-beta.9.tgz#9698e9ad2cad23caf9090b7f62409668eb230ebd"
-  integrity sha512-oc8tSPeVgii8vi0CgnPGxZviLTCpVCXKDNK3Vs8jq61y9nRG3EUJ/oe8mG2Kzmz/5s8A5G1Tvo4sq6W/nKwhdQ==
+"@pmmmwh/react-refresh-webpack-plugin@^0.5.0-rc.0":
+  version "0.5.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.0-rc.0.tgz#2343f558dbc3a4cfa532d6d43cdabf72c4cd02f8"
+  integrity sha512-oJV/ukrTxm1zjq/D4A3arLSqDMCy4jnIVDYEfe+KX5FX07b0blWmGa3UaqtLYqZsb++V8VnyFlq0OYS3f9yi0g==
   dependencies:
     ansi-html "^0.0.7"
     core-js-pure "^3.8.1"
@@ -1298,10 +1298,10 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.1.1.tgz#c4b489e80096d9df1dfc97c79871aea7c617c469"
   integrity sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA==
 
-fork-ts-checker-webpack-plugin@^6.2.10:
-  version "6.2.10"
-  resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-6.2.10.tgz#800ab1fa523c76011a3413bc4e7815e45b63e826"
-  integrity sha512-HveFCHWSH2WlYU1tU3PkrupvW8lNFMTfH3Jk0TfC2mtktE9ibHGcifhCsCFvj+kqlDfNIlwmNLiNqR9jnSA7OQ==
+fork-ts-checker-webpack-plugin@^6.2.12:
+  version "6.2.12"
+  resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-6.2.12.tgz#b715297e39a77f31242d01a135a88d18c10d82ea"
+  integrity sha512-BzXGIfM47q1WFwXsNLl22dQVMFwSBgldL07lvqRJFxgrhT76QQ3nri5PX01Rxfa2RYvv/hqACULO8K5gT8fFuA==
   dependencies:
     "@babel/code-frame" "^7.8.3"
     "@types/json-schema" "^7.0.5"
@@ -2183,10 +2183,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.0.tgz#b6a5bf1284026ae640f17f7ff5658a7567fc0d18"
-  integrity sha512-kXtO4s0Lz/DW/IJ9QdWhAf7/NmPWQXkFr/r/WkR3vyI+0v8amTDxiaQSLzs8NBlytfLWX/7uQUMIW677yLKl4w==
+prettier@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
+  integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
 progress@^2.0.0:
   version "2.0.3"
@@ -2358,6 +2358,13 @@ serialize-javascript@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-5.0.1.tgz#7886ec848049a462467a97d3d918ebb2aaf934f4"
   integrity sha512-SaaNal9imEO737H2c05Og0/8LUXG7EnsZyMa8MzkmuHoELfT6txuj0cMqRj6zfPKnmQ1yasR4PCJc8x+M4JSPA==
+  dependencies:
+    randombytes "^2.1.0"
+
+serialize-javascript@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-6.0.0.tgz#efae5d88f45d7924141da8b5c3a7a7e663fefeb8"
+  integrity sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==
   dependencies:
     randombytes "^2.1.0"
 
@@ -2547,15 +2554,15 @@ tapable@^2.0.0, tapable@^2.1.1, tapable@^2.2.0:
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.2.0.tgz#5c373d281d9c672848213d0e037d1c4165ab426b"
   integrity sha512-FBk4IesMV1rBxX2tfiK8RAmogtWn53puLOQlvO8XuwlgxcYbP4mVPS9Ph4aeamSyyVjOl24aYWAuc8U5kCVwMw==
 
-terser-webpack-plugin@^5.1.1, terser-webpack-plugin@^5.1.3:
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/terser-webpack-plugin/-/terser-webpack-plugin-5.1.3.tgz#30033e955ca28b55664f1e4b30a1347e61aa23af"
-  integrity sha512-cxGbMqr6+A2hrIB5ehFIF+F/iST5ZOxvOmy9zih9ySbP1C2oEWQSOUS+2SNBTjzx5xLKO4xnod9eywdfq1Nb9A==
+terser-webpack-plugin@^5.1.1, terser-webpack-plugin@^5.1.4:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/terser-webpack-plugin/-/terser-webpack-plugin-5.1.4.tgz#c369cf8a47aa9922bd0d8a94fe3d3da11a7678a1"
+  integrity sha512-C2WkFwstHDhVEmsmlCxrXUtVklS+Ir1A7twrYzrDrQQOIMOaVAYykaoo/Aq1K0QRkMoY2hhvDQY1cm4jnIMFwA==
   dependencies:
     jest-worker "^27.0.2"
     p-limit "^3.1.0"
     schema-utils "^3.0.0"
-    serialize-javascript "^5.0.1"
+    serialize-javascript "^6.0.0"
     source-map "^0.6.1"
     terser "^5.7.0"
 
