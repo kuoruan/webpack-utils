@@ -128,10 +128,10 @@
   dependencies:
     "@types/webpack" "^4"
 
-"@types/compression-webpack-plugin@^6.0.5":
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/@types/compression-webpack-plugin/-/compression-webpack-plugin-6.0.5.tgz#41b9bb243767c0062080d2ec046d1f44f3412c0a"
-  integrity sha512-rSgj+OtTFYS0PfbtyyujPUdHHIyg/Kj0+gUcQn2pU/yZdu3egEdX4Vz0yYCOMI2F21IJjwbDtYb/KQg7tUfpwA==
+"@types/compression-webpack-plugin@^6.0.6":
+  version "6.0.6"
+  resolved "https://registry.yarnpkg.com/@types/compression-webpack-plugin/-/compression-webpack-plugin-6.0.6.tgz#0af843e445b5b6531432a8f521cc2c34c4a82276"
+  integrity sha512-UuSUiWmgg4zfzTaGwyo4XCY4MBfgPuvvwAHujQZyu1beGDiJKXU3YMg0Pl6zcLMYV6tDqZJWyYG1QkT5yt28EA==
   dependencies:
     "@types/webpack" "^4"
 
