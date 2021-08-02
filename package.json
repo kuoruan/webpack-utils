@@ -49,7 +49,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
-    "@types/assets-webpack-plugin": "^6.1.1",
+    "@types/assets-webpack-plugin": "^6.1.2",
     "@types/compression-webpack-plugin": "^6.0.5",
     "@types/copy-webpack-plugin": "^8.0.0",
     "@types/mini-css-extract-plugin": "^2.0.1",
