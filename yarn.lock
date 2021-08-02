@@ -203,10 +203,10 @@
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
   integrity sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
 
-"@types/stylelint@^13.13.0":
-  version "13.13.0"
-  resolved "https://registry.yarnpkg.com/@types/stylelint/-/stylelint-13.13.0.tgz#8e0d99f1133b235f6ac629a8e6162e61e6854e34"
-  integrity sha512-/PxG8arC6lNjOGQ2QkWr60v9yQ6vnyOdDmyoM8ysU1UCdTm71+IztrHm5jCTJob9/HTqGNcemwsCDo0mjdjSzA==
+"@types/stylelint@^13.13.1":
+  version "13.13.1"
+  resolved "https://registry.yarnpkg.com/@types/stylelint/-/stylelint-13.13.1.tgz#c7534ccf35efc019f29d883e2655c651dc3c9b7b"
+  integrity sha512-CBXFUqaMwCw0PX/sVSlT4JR+wTXJ3rv67cdhIH4EoekbrlNeNw8Dx791p2cTTozYJItMOZJa4/j7Br1mmUHdCw==
   dependencies:
     globby "11.x.x"
     postcss "7.x.x"
@@ -613,11 +613,6 @@ array.prototype.flat@^1.2.4:
     call-bind "^1.0.0"
     define-properties "^1.1.3"
     es-abstract "^1.18.0-next.1"
-
-arrify@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/arrify/-/arrify-2.0.1.tgz#c9655e9331e0abcd588d2a7cad7e9956f66701fa"
-  integrity sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==
 
 assets-webpack-plugin@^7.1.1:
   version "7.1.1"
@@ -2531,18 +2526,17 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
 
-stylelint-webpack-plugin@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/stylelint-webpack-plugin/-/stylelint-webpack-plugin-2.2.2.tgz#ecd241fb689346ee471c125fb0ef149488bd1980"
-  integrity sha512-zfIsAF13xe6xuhwxZDFWQEmuVcxnRk9JFovyRL/23CWjPK1HLRw4QZdvo0Bz1bQZaDQA+6ha7cU0NO+LXaw4Mw==
+stylelint-webpack-plugin@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/stylelint-webpack-plugin/-/stylelint-webpack-plugin-3.0.1.tgz#51832909fb92745fd9afa702b772a35aa60610fc"
+  integrity sha512-1qUJTjXSGEGxsdYelZCmDZgA87H6/XR0xrl5a4mwAlIcWcNvr0QeH0e0ZY3ZJTY/rJ2xjKnt5ETvFzOZpPbuDg==
   dependencies:
-    "@types/stylelint" "^13.13.0"
-    arrify "^2.0.1"
+    "@types/stylelint" "^13.13.1"
     globby "^11.0.4"
-    jest-worker "^27.0.2"
+    jest-worker "^27.0.6"
     micromatch "^4.0.4"
     normalize-path "^3.0.0"
-    schema-utils "^3.0.0"
+    schema-utils "^3.1.0"
 
 supports-color@^5.3.0:
   version "5.5.0"
