@@ -121,10 +121,10 @@
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
   integrity sha512-/+CRPXpBDpo2RK9C68N3b2cOvO0Cf5B9aPijHsoDQTHivnGSObdOF2BRQOYjojWTDy6nQvMjmqRXIxH55VjxxA==
 
-"@types/assets-webpack-plugin@^6.1.1":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@types/assets-webpack-plugin/-/assets-webpack-plugin-6.1.1.tgz#9f3d9018b027e8f1215f6ee1893f1af1322bb268"
-  integrity sha512-5SnJ+2hr7bkRH28ZKIGhd1g/qcSuFR+HuAKj39kJW+lWJ00EthU36ntcd0neN3qpQmF9Y6uVuM8Uq1SAyQY8dg==
+"@types/assets-webpack-plugin@^6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@types/assets-webpack-plugin/-/assets-webpack-plugin-6.1.2.tgz#ebc90e916989308104667eb92da3904193da6b57"
+  integrity sha512-YDciyAOsC+QTTq1VHB/ghpQXAV8m0jAksUJYKAuYenQYZNg8+IpWmT6KSzchqezaP3tyBxF2xnXsGSVqp/GPng==
   dependencies:
     "@types/webpack" "^4"
 
