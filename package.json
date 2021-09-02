@@ -52,7 +52,7 @@
     "@types/assets-webpack-plugin": "^6.1.2",
     "@types/compression-webpack-plugin": "^6.0.6",
     "@types/copy-webpack-plugin": "^8.0.1",
-    "@types/mini-css-extract-plugin": "^2.0.1",
+    "@types/mini-css-extract-plugin": "^2.2.0",
     "@types/terser-webpack-plugin": "^5.0.4",
     "@types/webpack-node-externals": "^2.5.2",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
